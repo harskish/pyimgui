@@ -1,6 +1,6 @@
 # distutils: language = c++
-# distutils: sources = imgui-cpp/imgui.cpp imgui-cpp/imgui_draw.cpp imgui-cpp/imgui_demo.cpp imgui-cpp/imgui_widgets.cpp imgui-cpp/imgui_tables.cpp config-cpp/py_imconfig.cpp
-# distutils: include_dirs = imgui-cpp ansifeed-cpp
+# distutils: sources = implot-cpp/implot.cpp implot-cpp/implot_items.cpp implot-cpp/implot_demo.cpp imgui-cpp/imgui.cpp imgui-cpp/imgui_draw.cpp imgui-cpp/imgui_demo.cpp imgui-cpp/imgui_widgets.cpp imgui-cpp/imgui_tables.cpp config-cpp/py_imconfig.cpp
+# distutils: include_dirs = imgui-cpp ansifeed-cpp implot-cpp
 # cython: embedsignature=True
 """
 
@@ -12067,3 +12067,6 @@ def _py_vertex_buffer_vertex_size():
 
 def _py_index_buffer_index_size():
     return sizeof(cimgui.ImDrawIdx)
+
+
+include "imgui/plot.pyx"

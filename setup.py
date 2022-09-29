@@ -130,7 +130,7 @@ EXTENSIONS = [
             # note: for raising custom exceptions directly in ImGui code
             ('PYIMGUI_CUSTOM_EXCEPTION', None)
         ] + os_specific_macros + general_macros,
-        include_dirs=['imgui', 'config-cpp', 'imgui-cpp', 'ansifeed-cpp'],
+        include_dirs=['imgui', 'config-cpp', 'imgui-cpp', 'ansifeed-cpp', 'implot-cpp'],
     ),
     Extension(
         "imgui.internal", extension_sources("imgui/internal"),
@@ -140,15 +140,6 @@ EXTENSIONS = [
             ('PYIMGUI_CUSTOM_EXCEPTION', None)
         ] + os_specific_macros + general_macros,
         include_dirs=['imgui', 'config-cpp', 'imgui-cpp', 'ansifeed-cpp'],
-    ),
-    Extension(
-        "imgui.plot", extension_sources("imgui/plot"),
-        extra_compile_args=os_specific_flags,
-        define_macros=[
-            # note: for raising custom exceptions directly in ImGui code
-            ('PYIMGUI_CUSTOM_EXCEPTION', None)
-        ] + os_specific_macros + general_macros,
-        include_dirs=['implot-cpp', 'imgui', 'config-cpp', 'imgui-cpp', 'ansifeed-cpp'],
     ),
 ]
 

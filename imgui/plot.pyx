@@ -1,7 +1,8 @@
-# distutils: language = c++
-# distutils: sources = implot-cpp/implot.cpp implot-cpp/implot_items.cpp implot-cpp/implot_demo.cpp imgui-cpp/imgui.cpp imgui-cpp/imgui_draw.cpp imgui-cpp/imgui_demo.cpp imgui-cpp/imgui_widgets.cpp imgui-cpp/imgui_tables.cpp config-cpp/py_imconfig.cpp 
-# distutils: include_dirs = implot-cpp ansifeed-cpp imgui-cpp
-# cython: embedsignature=True
+# Included at end of core.pyx.
+# Results in a single binary containing both
+# ImGui and ImPlot, avoiding issues with heaps
+# and globals not being shared across DLL boundaries.
+# (see imgui.cpp:930 for more information)
 
 import cython
 from cython.operator cimport dereference as deref
@@ -63,7 +64,7 @@ AXIS_FLAGS_NO_DECORATIONS = cimplot.ImPlotAxisFlags_NoDecorations
 ##########################################################################################3
 
 
-include "common.pyx"
+#include "common.pyx"
 
 cdef class _ImPlotContext(object):
     cdef cimplot.ImPlotContext* _ptr
@@ -81,7 +82,7 @@ cdef class _ImPlotContext(object):
         return other._ptr == self._ptr
 
 
-cdef class _Colors(object):
+cdef class _PlotColors(object):
     cdef PlotStyle _style
 
     def __cinit__(self):
@@ -114,7 +115,7 @@ cdef class PlotStyle(object):
     """
     cdef cimplot.ImPlotStyle* _ptr
     cdef bool _owner
-    cdef _Colors _colors
+    cdef _PlotColors _colors
 
     def __cinit__(self):
         self._ptr = NULL
@@ -145,7 +146,7 @@ cdef class PlotStyle(object):
     cdef PlotStyle from_ref(cimplot.ImPlotStyle& ref):
         cdef PlotStyle instance = PlotStyle()
         instance._ptr = &ref
-        instance._colors = _Colors(instance)
+        instance._colors = _PlotColors(instance)
         return instance
 
     @staticmethod
@@ -153,7 +154,7 @@ cdef class PlotStyle(object):
         cdef cimplot.ImPlotStyle* _ptr = new cimplot.ImPlotStyle()
         cdef PlotStyle instance = PlotStyle.from_ref(deref(_ptr))
         instance._owner = True
-        instance._colors = _Colors(instance)
+        instance._colors = _PlotColors(instance)
         return instance
     ## float LineWeight
 
@@ -1738,7 +1739,7 @@ def style_colors_light(PlotStyle dst = None):
         cimplot.StyleColorsLight(NULL)
 
 
-def push_style_var(cimplot.ImPlotStyleVar variable, value):
+def plot_push_style_var(cimplot.ImPlotStyleVar variable, value):
     if not (0 <= variable < cimplot.ImPlotStyleVar_COUNT):
         warnings.warn("Unknown style variable: {}".format(variable))
         return False
@@ -1758,7 +1759,7 @@ def push_style_var(cimplot.ImPlotStyleVar variable, value):
         return True
 
 
-def pop_style_var(int count=1):
+def plot_pop_style_var(int count=1):
     cimplot.PopStyleVar(count)
 
 
@@ -1778,7 +1779,7 @@ def set_next_error_bar_style(tuple col = IMPLOT_AUTO_COL, float size = IMPLOT_AU
     cimplot.SetNextErrorBarStyle(_cast_tuple_ImVec4(col), size, weight)
 
 
-def push_style_color(
+def plot_push_style_color(
     cimplot.ImPlotCol variable,
     float r,
     float g,
@@ -1793,7 +1794,7 @@ def push_style_color(
     return True
 
 
-def pop_style_color(int count=1):
+def plot_pop_style_color(int count=1):
     cimplot.PopStyleColor(count)
 
 
