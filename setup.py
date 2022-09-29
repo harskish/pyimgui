@@ -46,14 +46,14 @@ README = os.path.join(os.path.dirname(__file__), 'README.md')
 if sys.platform in ('cygwin', 'win32'):  # windows
     # note: `/FI` means forced include in VC++/VC
     # note: may be obsoleted in future if ImGui gets patched
-    os_specific_flags = ['/FIpy_imconfig.h', '/std:c++11']
+    os_specific_flags = ['/FIpy_imconfig.h', '/std:c++14']
     # placeholder for future
     os_specific_macros = []
 else:  # OS X and Linux
     # note: `-include` means forced include in GCC/clang
     # note: may be obsoleted in future if ImGui gets patched
     # placeholder for future
-    os_specific_flags = ['-includeconfig-cpp/py_imconfig.h', '-std=c++11']
+    os_specific_flags = ['-includeconfig-cpp/py_imconfig.h', '-std=c++14']
     os_specific_macros = []
 
 
