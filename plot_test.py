@@ -5,10 +5,31 @@ import OpenGL.GL as gl
 import imgui
 from imgui.integrations.glfw import GlfwRenderer
 
+import numpy as np
+import array
+
+def toarr(a: np.ndarray):
+    return array.array(a.dtype.char, a)
+
+N = 50_000
+x = np.linspace(0, 4*np.pi, N)
+y = 2*np.cos(x)
+
+x = toarr(x)
+y = toarr(y)
+
+def draw():
+    imgui.begin_plot("My Plot")
+    imgui.plot_line2('legend', x, y, N)
+    imgui.end_plot()
+
 def main():
     c1 = imgui.create_context()
-    c2 = imgui.plot_create_context()
+    _ = imgui.plot_create_context()
     imgui.plot_set_imgui_context(c1)
+
+    # Turn global AA on
+    imgui.plot_get_style().anti_aliased_lines = True
     
     window = impl_glfw_init()
     impl = GlfwRenderer(window)
@@ -33,7 +54,8 @@ def main():
             imgui.end_main_menu_bar()
 
         # Render
-        imgui.show_demo_window()
+        draw()
+        #imgui.show_demo_window()
         imgui.plot_show_demo_window()
 
         gl.glClearColor(0.1, 0.1, 0.1, 0.0)
