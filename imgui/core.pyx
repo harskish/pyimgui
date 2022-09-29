@@ -575,7 +575,7 @@ include "imgui/common.pyx"
 
 _contexts = {}
 cdef class _ImGuiContext(object):
-    cdef cimgui.ImGuiContext* _ptr
+    #cdef cimgui.ImGuiContext* _ptr  # moved to core.pxd
 
     # For objects that cimgui stores as void* (such as texture_id) but need to be kept alive for rendering.
     # The cache is cleared on new_frame().

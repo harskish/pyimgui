@@ -10,3 +10,10 @@ cdef class _Font(object):
 
     @staticmethod
     cdef from_ptr(cimgui.ImFont* ptr)
+
+# allows using _ImGuiContext in plot.pyx
+cdef class _ImGuiContext(object):
+   cdef cimgui.ImGuiContext* _ptr
+
+   @staticmethod
+   cdef from_ptr(cimgui.ImGuiContext* ptr)
