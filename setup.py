@@ -16,7 +16,7 @@ else:
     USE_CYTHON = True
 
 
-_CYTHONIZE_WITH_COVERAGE = os.environ.get("_CYTHONIZE_WITH_COVERAGE", False)
+_CYTHONIZE_WITH_COVERAGE = False #os.environ.get("_CYTHONIZE_WITH_COVERAGE", False)
 
 if _CYTHONIZE_WITH_COVERAGE and not USE_CYTHON:
     raise RuntimeError(
