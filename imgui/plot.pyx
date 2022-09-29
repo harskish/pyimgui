@@ -577,13 +577,13 @@ cdef class PlotStyle(object):
 ##########################################################################################3
 
 
-def create_context():
+def plot_create_context():
     cdef cimplot.ImPlotContext* _ptr
     _ptr = cimplot.CreateContext()
     return _ImPlotContext.from_ptr(_ptr)
 
 
-def destroy_context(_ImPlotContext ctx = None):
+def plot_destroy_context(_ImPlotContext ctx = None):
     if ctx and ctx._ptr != NULL:
         cimplot.DestroyContext(ctx._ptr)
         ctx._ptr = NULL
@@ -591,18 +591,18 @@ def destroy_context(_ImPlotContext ctx = None):
         raise RuntimeError("Context invalid (None or destroyed)")
 
 
-def get_current_context():
+def plot_get_current_context():
     cdef cimplot.ImPlotContext* _ptr
     _ptr = cimplot.GetCurrentContext()
     return _ImPlotContext.from_ptr(_ptr)
 
 
-def set_current_context(_ImPlotContext ctx):
+def plot_set_current_context(_ImPlotContext ctx):
     cimplot.SetCurrentContext(ctx._ptr)
 
 
 #def set_imgui_context(_ImGuiContext ctx):
-def set_imgui_context(core._ImGuiContext ctx):
+def plot_set_imgui_context(core._ImGuiContext ctx):
     if ctx._ptr == NULL:
         raise RuntimeError("ImGui Context invalid (None or destroyed)")
     cimplot.SetImGuiContext(ctx._ptr)
@@ -1707,32 +1707,32 @@ def end_drag_drop_source():
     cimplot.EndDragDropSource()
 
 
-def get_style():
+def plot_get_style():
     return PlotStyle.from_ref(cimplot.GetStyle())
 
 
-def style_colors_auto(PlotStyle dst = None):
+def plot_style_colors_auto(PlotStyle dst = None):
     if dst:
         cimplot.StyleColorsAuto(dst._ptr)
     else:
         cimplot.StyleColorsAuto(NULL)
 
 
-def style_colors_dark(PlotStyle dst = None):
+def plot_style_colors_dark(PlotStyle dst = None):
     if dst:
         cimplot.StyleColorsDark(dst._ptr)
     else:
         cimplot.StyleColorsDark(NULL)
 
 
-def style_colors_classic(PlotStyle dst = None):
+def plot_style_colors_classic(PlotStyle dst = None):
     if dst:
         cimplot.StyleColorsClassic(dst._ptr)
     else:
         cimplot.StyleColorsClassic(NULL)
 
 
-def style_colors_light(PlotStyle dst = None):
+def plot_style_colors_light(PlotStyle dst = None):
     if dst:
         cimplot.StyleColorsLight(dst._ptr)
     else:
@@ -1918,11 +1918,11 @@ def show_style_editor(PlotStyle style=None):
         cimplot.ShowStyleEditor()
 
 
-def show_user_guide():
+def plot_show_user_guide():
     cimplot.ShowUserGuide()
 
 
-def show_metrics_window(closable=False):
+def plot_show_metrics_window(closable=False):
     cdef cimplot.bool opened = True
 
     if closable:
@@ -1933,7 +1933,7 @@ def show_metrics_window(closable=False):
     return opened
 
 
-def show_demo_window(closable=False):
+def plot_show_demo_window(closable=False):
     cdef cimplot.bool opened = True
 
     if closable:

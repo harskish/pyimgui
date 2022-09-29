@@ -56,10 +56,11 @@ else:  # OS X and Linux
     os_specific_flags = ['-includeconfig-cpp/py_imconfig.h', '-std=c++14']
     os_specific_macros = []
 
+print('Disabling linetrace')
 
 if _CYTHONIZE_WITH_COVERAGE:
     compiler_directives = {
-        'linetrace': True,
+        'linetrace': False,
     }
     cythonize_opts = {
         'gdb_debug': True,
