@@ -25,6 +25,25 @@ def draw():
     implot.end_plot()
 
 def main():
+    """
+    # Context trickery (https://stackoverflow.com/a/19374253):
+    
+    - imgui_internal.h references 'extern IMGUI_API ImGuiContext* GImGui'
+    - imgui.cpp contains definition 'ImGuiContext* GImGui = NULL;'
+
+    # Windows:
+    - if implot.cpp tries to include imgui_internal.h, then it needs to provide a second
+      definition of GImGUI, since imgui.dll doesn't export it, and the linker can't find it
+    - if a separate definition is added, then no syncing can happen between the dlls.
+        -> must provide a function for setting the context handle manually.
+
+    # Linux / MacOS:
+    - imgui.so exports/exposes the global variable GImGUI.
+    - linker can add imgui.so:GImGUI as load-time dependency to implot.so
+        -> context is synced.
+    
+    """
+
     c1 = imgui.create_context()
     _ = implot.create_context()
     implot.set_imgui_context(c1)
