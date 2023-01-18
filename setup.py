@@ -39,7 +39,7 @@ def get_version(version_tuple):
 init = os.path.join(os.path.dirname(__file__), 'imgui', '__init__.py')
 version_line = list(filter(lambda l: l.startswith('VERSION'), open(init)))[0]
 
-VERSION = get_version(eval(version_line.split('=')[-1]))
+#VERSION = get_version(eval(version_line.split('=')[-1]))
 README = os.path.join(os.path.dirname(__file__), 'README.md')
 
 
@@ -155,7 +155,7 @@ EXTENSIONS = [
 
 setup(
     name='pyplotgui',  # name on PyPi; still imported as 'imgui'
-    version=VERSION,
+    version='0.0.1',   # separate versioning from pyimgui
     packages=find_packages('.'),
 
     author=u'Erik Härkönen',
