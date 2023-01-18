@@ -21,7 +21,7 @@ jobs:
           FROM_APPVEYOR: 1  # import fix in conftest.py
           CIBW_BEFORE_TEST: pip install -r doc/requirements-test.txt
           CIBW_TEST_COMMAND: "pytest {project}/tests"
-          CIBW_SKIP: "pp*" # no pypy for now
+          CIBW_SKIP: "pp* cp*-musllinux*"
         # with:
         #   package-dir: .
         #   output-dir: wheelhouse
