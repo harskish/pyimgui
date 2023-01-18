@@ -154,18 +154,18 @@ EXTENSIONS = [
 
 
 setup(
-    name='imgui',
+    name='pyplotgui',  # name on PyPi; still imported as 'imgui'
     version=VERSION,
     packages=find_packages('.'),
 
-    author=u'Michał Jaworski',
-    author_email='swistakm@gmail.com',
+    author=u'Erik Härkönen',
+    author_email='erik.harkonen@hotmail.com',
 
-    description="Cython-based Python bindings for dear imgui",
+    description="Cython-based Python bindings for dear imgui and implot",
     long_description=read(README),
     long_description_content_type="text/markdown",
 
-    url="https://github.com/swistakm/pyimgui",
+    url="https://github.com/harskish/pyplotgui",
 
     ext_modules=cythonize(
         EXTENSIONS,
@@ -180,14 +180,7 @@ setup(
         'License :: OSI Approved :: BSD License',
 
         'Programming Language :: Cython',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
 
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Cython',
