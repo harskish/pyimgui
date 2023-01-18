@@ -1,6 +1,12 @@
 name: Build and publish
 
-on: [push, pull_request]
+# Guide: https://scikit-hep.org/developer/gha_wheels
+
+on:
+  workflow_dispatch:  # button in UI for manual dispatch
+  release:            # new GitHub release
+    types:
+      - published
 
 jobs:
   build_wheels:
@@ -22,6 +28,7 @@ jobs:
           CIBW_BEFORE_TEST: pip install -r doc/requirements-test.txt
           CIBW_TEST_COMMAND: "pytest {project}/tests"
           CIBW_SKIP: "pp* cp*-musllinux*"
+          CIBW_BUILD: "cp310*"  # TODO: limited only for testing
         # with:
         #   package-dir: .
         #   output-dir: wheelhouse
@@ -49,9 +56,6 @@ jobs:
   upload_pypi:
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
-    # upload to PyPI on every tag starting with 'v'
-    # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-    # alternatively, to publish when a GitHub Release is created, use the following rule:
     if: github.event_name == 'release' && github.event.action == 'published'
     steps:
       - uses: actions/download-artifact@v3
@@ -61,7 +65,7 @@ jobs:
           name: artifact
           path: dist
 
-      - uses: pypa/gh-action-pypi-publish@v1.5.0
+      - uses: pypa/gh-action-pypi-publish@v1.6.4
         with:
           user: __token__
           password: ${{ secrets.TEST_PYPI_PASSWORD }} # pypi_password
