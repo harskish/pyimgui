@@ -12,6 +12,24 @@ from sphinx.application import Sphinx
 PROJECT_ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sphinx = None
 
+# Big Sur fix for dynamic library loading
+# https://stackoverflow.com/a/65599706
+try:
+    import OpenGL as ogl
+    try:
+        import OpenGL.GL   # this fails in <=2020 versions of Python on OS X 11.x
+    except ImportError:
+        print('Patching for Big Sur')
+        from ctypes import util
+        orig_util_find_library = util.find_library
+        def new_util_find_library( name ):
+            res = orig_util_find_library( name )
+            if res: return res
+            return '/System/Library/Frameworks/'+name+'.framework/'+name
+        util.find_library = new_util_find_library
+except ImportError:
+    pass
+
 if 'FROM_APPVEYOR' in os.environ:
     # We need to trick the import mechanism in order to load the
     # builded wheel instead of the local src directory
@@ -22,7 +40,6 @@ if 'FROM_APPVEYOR' in os.environ:
     os.rename(init_file_path_tmp, init_file_path)
 else:
     import imgui
-
 
 def project_path(*paths):
     return os.path.join(PROJECT_ROOT_DIR, *paths)
