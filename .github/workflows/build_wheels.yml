@@ -28,7 +28,7 @@ jobs:
           CIBW_BEFORE_TEST: pip install -r doc/requirements-test.txt
           CIBW_TEST_COMMAND: "pytest {project}/tests"
           CIBW_SKIP: "pp* cp*-musllinux*"
-          CIBW_BUILD: "cp310*"  # TODO: limited only for testing
+          #CIBW_BUILD: "cp310*"  # limit for testing?
         # with:
         #   package-dir: .
         #   output-dir: wheelhouse
