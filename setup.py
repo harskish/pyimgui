@@ -155,7 +155,7 @@ EXTENSIONS = [
 
 setup(
     name='pyplotgui',  # name on PyPi; still imported as 'imgui'
-    version='0.0.2',   # separate versioning from pyimgui
+    version='1.0.0',   # separate versioning from pyimgui
     packages=find_packages('.'),
 
     author=u'Erik Härkönen',
