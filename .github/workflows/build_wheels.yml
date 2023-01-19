@@ -58,7 +58,7 @@ jobs:
   # 1. Increment version number, commit & push
   # 2. Trigger build via actions
   # 3. Download artifact, unzip into dist/*
-  # 4. `twine upload --repository testpypi dist/*`
+  # 4. `twine upload dist/*` or `twine upload --repository testpypi dist/*`
   # 5. Enter username & password
   upload_pypi:
     needs: [build_wheels, build_sdist]
