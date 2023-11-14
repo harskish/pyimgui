@@ -10,7 +10,10 @@ import numpy as np
 import array
 
 def toarr(a: np.ndarray):
-    return array.array(a.dtype.char, a)
+    #return array.array(a.dtype.char, a)                # 8.45ms
+    #return array.array(a.dtype.char, a.tobytes())      # 0.23ms
+    #return array.array(a.dtype.char, bytearray(a))     # 0.10ms
+    return array.array(a.dtype.char, bytearray(a.data)) # 0.10ms
 
 N = 50_000
 x = np.linspace(0, 4*np.pi, N)
@@ -74,7 +77,7 @@ def main():
             imgui.end_main_menu_bar()
 
         # Render
-        #draw()
+        draw()
         imgui.show_demo_window()
         implot.show_demo_window()
 

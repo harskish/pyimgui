@@ -14,6 +14,8 @@ See the Pyimgui documentation: [pyimgui.readthedocs.io](https://pyimgui.readthed
  
     pip install pyplotgui
 
+# Usage
+See `example/plot_test.py`
 
 # Project distribution
 
